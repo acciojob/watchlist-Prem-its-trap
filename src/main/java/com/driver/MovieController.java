@@ -2,7 +2,6 @@ package com.driver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +46,10 @@ public class MovieController {
         return new ResponseEntity<>(director, HttpStatus.FOUND);
     }
 
+    @GetMapping("/movies/get-movies-by-director-name/{director}")
+    public  ResponseEntity getMoviesByDirectorName(@PathVariable("director") String name){
+        return new ResponseEntity<>(movieService.getMoviesByDirectorName(name),HttpStatus.CREATED);
+    }
 
     @GetMapping("/movies/get-all-movies")
     public ResponseEntity findAllMovies(){

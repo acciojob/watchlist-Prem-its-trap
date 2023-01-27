@@ -18,12 +18,11 @@ public class MovieService {
         return movieRepository.addDirector(director);
     }
 
+    public String addMovieDirectorPair(String mname, String dname){
+        return movieRepository.addMovieDirectorPair(mname,dname);
+    }
     public Movie getMovie(String name){
         return movieRepository.getMovie(name);
-    }
-
-    public String addMovieDirectorPair(String mname, String dname){
-         return movieRepository.addMovieDirectorPair(mname,dname);
     }
     public Director getDirector(String name){
         return movieRepository.getDirector(name);

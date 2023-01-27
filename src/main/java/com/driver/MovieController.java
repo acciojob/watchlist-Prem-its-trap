@@ -27,9 +27,12 @@ public class MovieController {
 
     @PutMapping("/movies/add-movie-director-pair")
     public ResponseEntity addMovieDirectorPair(@RequestParam("mname") String mname, @RequestParam("dname") String dname){
-         movieService.addMovieDirectorPair(mname,dname);
 
-        return new ResponseEntity<>("New movie director pair added",HttpStatus.CREATED);
+         String ans = movieService.addMovieDirectorPair(mname,dname);
+         if(ans.equals("movie does not exist") || ans.equals("director does not exist")){
+             return new ResponseEntity<>(ans, HttpStatus.BAD_REQUEST);
+         }
+        return new ResponseEntity<>(ans,HttpStatus.CREATED);
     }
 
     @GetMapping("/movies/get-movie-by-name/{name}")
@@ -51,10 +54,16 @@ public class MovieController {
         return new ResponseEntity<>(ls,HttpStatus.FOUND);
     }
 
+    @DeleteMapping("/movies/delete-director-by-name")
+    public ResponseEntity deleteDirectorByName(@RequestParam("name") String name){
+        String res = movieService.deleteByname(name);
+        return new ResponseEntity<>(res,HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/movies/delete-all-directors")
     public ResponseEntity deleteAllDirectors(){
-        movieService.deleteAllDirector();
-        return new ResponseEntity("All directors deletedSuccessfully", HttpStatus.CREATED);
+        String res = movieService.deleteAllDirector();
+        return new ResponseEntity(res, HttpStatus.CREATED);
     }
 
 }

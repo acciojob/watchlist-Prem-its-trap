@@ -30,4 +30,8 @@ public class MovieService {
     public ArrayList<String> findAllMovies(){
         return  movieRepository.findAllMovies();
     }
+
+    public void deleteAllDirector(){
+        movieRepository.deleteAllDirectorsAndMovie();
+    }
 }

@@ -51,4 +51,10 @@ public class MovieController {
         return new ResponseEntity<>(ls,HttpStatus.FOUND);
     }
 
+    @DeleteMapping("/movies/delete-all-directors")
+    public ResponseEntity deleteAllDirectors(){
+        movieService.deleteAllDirector();
+        return new ResponseEntity("All directors deletedSuccessfully", HttpStatus.CREATED);
+    }
+
 }

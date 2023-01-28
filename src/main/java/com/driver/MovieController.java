@@ -25,7 +25,7 @@ public class MovieController {
     }
 
     @PutMapping("/movies/add-movie-director-pair")
-    public ResponseEntity<String> addMovieDirectorPair(@RequestParam("mname") String mname, @RequestParam("dname") String dname){
+    public ResponseEntity<String> addMovieDirectorPair(@RequestParam("movie") String mname, @RequestParam("director") String dname){
 
          String ans = movieService.addMovieDirectorPair(mname,dname);
          if(ans.equals("movie does not exist") || ans.equals("director does not exist")){
@@ -53,8 +53,7 @@ public class MovieController {
 
     @GetMapping("/movies/get-all-movies")
     public ResponseEntity<List<String>> findAllMovies(){
-        List<String> ls = movieService.findAllMovies();
-        return new ResponseEntity<>(ls,HttpStatus.FOUND);
+        return new ResponseEntity<>(movieService.findAllMovies(),HttpStatus.FOUND);
     }
 
     @DeleteMapping("/movies/delete-director-by-name")

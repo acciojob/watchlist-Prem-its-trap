@@ -6,94 +6,91 @@ import java.util.*;
 
 @Repository
 public class MovieRepository {
-    HashMap<String, Movie> db = new HashMap<String, Movie>();
-    HashMap<String, Director> ddb = new HashMap<>();
-    HashMap<String,String> directorMovieMapping = new HashMap<>();
+    Map<String,Movie> moviedb=new HashMap<>();
+    Map<String,Director> direcdb=new HashMap<>();
+    Map<String,String> movdirdb=new HashMap<>();
+
     public String addMovie(Movie movie){
         String name = movie.getName();
-        db.put(name,movie);
-        return "Movie added successfully";
+        moviedb.put(name,movie);
+        return "Movie added Successfully";
     }
 
     public String addDirector(Director director){
-        String name = director.getName();
-        ddb.put(name,director);
-        return "Director added successfully";
+        String name= director.getName();
+        direcdb.put(name,director);
+        return "Director added Successfully";
     }
 
-    public String addMovieDirectorPair(String mname, String dname){
-        if(!db.containsKey(mname)){
+    public String addMovieDirectorPair(String moviename , String directorname){
+        if(!moviedb.containsKey(moviename)){
             return "movie does not exist";
         }
-        if(!db.containsKey(dname)){
+        if(!direcdb.containsKey(directorname)){
             return "director does not exist";
         }
-        directorMovieMapping.put(mname,dname);
-        return "Movie and director pair added successfully";
+        movdirdb.put(moviename,directorname);
+        return "Added Successfully";
     }
 
-    public Movie getMovie(String name){
-        if(!db.containsKey(name)) return null;
-        return db.get(name);
+    public Movie getMoviesByName(String moviename){
+        if(moviedb.containsKey(moviename)){
+            return moviedb.get(moviename);
+        }
+        return null;
     }
-    public Director getDirector(String name){
-        if(!ddb.containsKey(name)) return null;
-        return  ddb.get(name);
+
+    public Director getDirectorByName(String dirname){
+        if(direcdb.containsKey(dirname)) return direcdb.get(dirname);
+        return null;
     }
 
     public List<String> getMoviesByDirectorName(String dirname){
-        if(!ddb.containsKey(dirname)) {
-            return null;
-        }
-        List<String> ls = new ArrayList<>();
-        for(String a : directorMovieMapping.keySet()){
-            if(directorMovieMapping.get(a).equals(dirname)){
-                ls.add(a);
+        if(!direcdb.containsKey((dirname))) return null;
+        List<String> l= new ArrayList<>();
+        for(String a : movdirdb.keySet()){
+            if(movdirdb.get(a).equals(dirname)){
+                l.add(a);
             }
         }
-        return ls;
+        return l;
     }
 
-    //7 get all movies
     public List<String> findAllMovies(){
-        List<String> ls = new ArrayList<>();
-        for(Map.Entry<String,Movie> e:db.entrySet()){
-            ls.add(e.getKey());
+        List<String> l=new ArrayList<>();
+        for(String a : moviedb.keySet()){
+            l.add(a);
         }
-        return ls;
+        return l;
     }
-
 
     public String deleteDirectorByName(String name){
-        HashSet<String> hs = new HashSet<>();
-        ddb.remove(name);
-        for(String dir: directorMovieMapping.keySet()){
-            if(directorMovieMapping.get(dir).equals(name)){
-                hs.add(dir);
+        HashSet<String> hm= new HashSet<>();
+        direcdb.remove(name);
+        for(String a:movdirdb.keySet()){
+            if(movdirdb.get(a).equals(name)){
+                hm.add(a);
             }
+
         }
-        for(String  a: hs){
-            db.remove(a);
-            directorMovieMapping.remove(a);
+        for(String a :hm) {
+            moviedb.remove(a);
+            movdirdb.remove(a);
         }
-        return "Delete Successfully";
+
+        return "Deleted Successfully";
     }
 
-
-    // 9 delete all the directors and all movies
-    public String deleteAllDirectorsAndMovie(){
-        HashSet<String> hs = new HashSet<>();
-
-       for(String dir:directorMovieMapping.keySet()){
-           hs.add(dir);
-       }
-       for(String a : hs){
-           db.remove(a);
-           directorMovieMapping.remove(a);
-       }
-       ddb.clear();
-       return "Deleted all directors and related movie";
-
+    public String deleteAllDirectors(){
+        HashSet<String> hm=new HashSet<>();
+        for(String a : movdirdb.keySet()){
+            hm.add(a);
+        }
+        for(String a : hm){
+            moviedb.remove(a);
+            movdirdb.remove(a);
+        }
+        direcdb.clear();
+        return "Deleted all directors and related movies";
     }
-
 }

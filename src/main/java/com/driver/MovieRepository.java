@@ -33,9 +33,11 @@ public class MovieRepository {
     }
 
     public Movie getMovie(String name){
+        if(!db.containsKey(name)) return null;
         return db.get(name);
     }
     public Director getDirector(String name){
+        if(!ddb.containsKey(name)) return null;
         return  ddb.get(name);
     }
 

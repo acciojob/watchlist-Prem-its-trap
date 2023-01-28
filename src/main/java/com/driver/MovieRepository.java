@@ -55,8 +55,8 @@ public class MovieRepository {
     }
 
     //7 get all movies
-    public ArrayList<String> findAllMovies(){
-        ArrayList<String> ls = new ArrayList<>();
+    public List<String> findAllMovies(){
+        List<String> ls = new ArrayList<>();
         for(Map.Entry<String,Movie> e:db.entrySet()){
             ls.add(e.getKey());
         }
